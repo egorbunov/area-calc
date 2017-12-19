@@ -1,0 +1,60 @@
+/* * { margin: 0; padding: 0;}
+
+body, html { height:100%; } */
+
+body, html { height:100%; }
+
+body {
+    font-family: "Arial", Arial, Helvetica, sans-serif
+}
+
+button {
+    font-family: "Arial", Arial, Helvetica, sans-serif
+}
+
+/* #pcanvas {
+    position:absolute;
+    width:70%;
+    height:100%;
+} */
+
+.smallt {
+    font-size: 12pt;
+}
+
+#pcanvas {
+    width: 100%;
+    height: auto;
+}
+
+.main-row {
+    padding: 0;
+    margin: 0;
+}
+
+#back-canvas {
+    display: none;
+}
+
+.hidden-canvas {
+    z-index: -1;
+}
+
+.controls {
+    display: inline-block;
+    vertical-align: top;
+    padding: 5px;
+    line-height: 5px;
+}
+
+.contol-field {
+    font-size: 10pt
+}
+
+#scale {
+    font-weight: bold; 
+}
+
+#area {
+    font-weight: bold; 
+}

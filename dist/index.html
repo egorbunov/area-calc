@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Area calc</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+
+<body>
+    <canvas hidden class="hidden-canvas" id="back-canvas"></canvas>
+    <div class="container-fluid">
+        <div class="row main-row">
+            <div class="col-lg-offset-4">
+                <canvas id="pcanvas"></canvas>
+            </div>
+            <div class="controls col">
+                <h2>Backplate</h2>
+                <div class="input-group">
+                    <span class="input-group-addon contol-field" id="sizing-addon2">Back image</span>
+                    <input id="backplate" type="file" class="form-control contol-field" aria-describedby="sizing-addon2">
+                </div>
+                <br>
+                <div class="input-group">
+                    <span class="input-group-addon contol-field" id="sizing-addon2">X</span>
+                    <input id="posX" type="number" value="0" step="10" class="form-control contol-field" aria-describedby="sizing-addon2">
+                </div>
+                <br>                
+                <div class="input-group">
+                    <span class="input-group-addon contol-field" id="sizing-addon2">Y</span>
+                    <input id="posY" type="number" value="0" step="10" class="form-control contol-field" aria-describedby="sizing-addon2">
+                </div>
+                <br>                
+                <div class="input-group">
+                    <span class="input-group-addon contol-field" id="sizing-addon2">Scale</span>
+                    <input id="inpScale" type="number" value="100" step="5" min="0" class="form-control contol-field" aria-describedby="sizing-addon2">
+                </div>
+                <br>
+                <br>                
+                <h2>Scale</h2>
+                <button id="setup-scale" class="btn">Setup scale</button>
+                <button id="reset-scale" class="btn">Reset</button> 
+                <br>
+                <br>
+                <div class="input-group">
+                    <span class="input-group-addon contol-field" id="sizing-addon2">Sample size</span>
+                    <input id="sample-size" type="number" value="" step="1" class="form-control contol-field" aria-describedby="sizing-addon2">
+                </div>
+                <br>
+                <br>
+                <table class="table table-hover" style="font-size: 10pt">
+                    <tbody>
+                    <tr>
+                        <td scope="row">Scale factor (userUnits / canvasUnits)</td>
+                        <td id="scale-factor">1</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <br>
+                <br>
+                <h2>Path</h2>
+                <button id="draw-path" class="btn">Draw path</button>
+                <button id="finish-path" class="btn">Finish path</button>
+                <button id="reset-path" class="btn">Reset path</button>
+                <br>
+                <br>
+                <h2>Results</h2>
+                <button id="calc-area" class="btn btn-primary">Calculate</button>       
+                <br>
+                <br>
+                <table class="table table-hover">
+                    <tbody>
+                    <tr>
+                        <th scope="row">Area</th>
+                        <td id="area">0</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>   
+        </div>
+             
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+
+    <script src="bundle.js"></script>
+</body>
+
+</html>
