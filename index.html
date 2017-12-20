@@ -11,61 +11,67 @@
     <canvas hidden class="hidden-canvas" id="back-canvas"></canvas>
     <div class="container-fluid">
         <div class="row main-row">
-            <div class="col-lg-offset-4">
+            <div class="col-lg-offset-10 col-md-offset-10 col-offset-10 col-sm-offset-10" id="canvas-div">
                 <canvas id="pcanvas"></canvas>
             </div>
-            <div class="controls col">
+            <div class="controls col-lg-2">
                 <h2>Backplate</h2>
+
                 <div class="input-group">
-                    <span class="input-group-addon contol-field" id="sizing-addon2">Back image</span>
-                    <input id="backplate" type="file" class="form-control contol-field" aria-describedby="sizing-addon2">
+                    <!-- <label class="custom-file">
+                        <input type="file" id="file2" class="custom-file-input">
+                        <span class="custom-file-control"></span>
+                    </label> -->
+                    <input id="backplate" type="file" class="form-control" aria-describedby="sizing-addon2">
                 </div>
                 <br>
                 <div class="input-group">
-                    <span class="input-group-addon contol-field" id="sizing-addon2">X</span>
-                    <input id="posX" type="number" value="0" step="10" class="form-control contol-field" aria-describedby="sizing-addon2">
+                    <span class="input-group-addon" id="sizing-addon2">X</span>
+                    <input id="posX" type="number" value="0" step="10" class="form-control" aria-describedby="sizing-addon2">
                 </div>
                 <br>                
                 <div class="input-group">
-                    <span class="input-group-addon contol-field" id="sizing-addon2">Y</span>
-                    <input id="posY" type="number" value="0" step="10" class="form-control contol-field" aria-describedby="sizing-addon2">
+                    <span class="input-group-addon" id="sizing-addon2">Y</span>
+                    <input id="posY" type="number" value="0" step="10" class="form-control" aria-describedby="sizing-addon2">
                 </div>
                 <br>                
                 <div class="input-group">
-                    <span class="input-group-addon contol-field" id="sizing-addon2">Scale</span>
-                    <input id="inpScale" type="number" value="100" step="5" min="0" class="form-control contol-field" aria-describedby="sizing-addon2">
+                    <span class="input-group-addon" id="sizing-addon2">Scale</span>
+                    <input id="inpScale" type="number" value="100" step="5" min="0" class="form-control" aria-describedby="sizing-addon2">
                 </div>
                 <br>
                 <br>                
                 <h2>Scale</h2>
-                <button id="setup-scale" class="btn">Setup scale</button>
-                <button id="reset-scale" class="btn">Reset</button> 
+                <div class="btn-group">
+                        <button id="setup-scale" class="btn btn-success">Setup scale</button>
+                        <button id="reset-scale" class="btn btn-warning">Reset</button> 
+                </div>
                 <br>
                 <br>
                 <div class="input-group">
-                    <span class="input-group-addon contol-field" id="sizing-addon2">Sample size</span>
+                    <span class="input-group-addon" id="sizing-addon2">Sample size</span>
                     <input id="sample-size" type="number" value="" step="1" class="form-control contol-field" aria-describedby="sizing-addon2">
                 </div>
                 <br>
                 <br>
-                <table class="table table-hover" style="font-size: 10pt">
+                <table class="table table-hover">
                     <tbody>
                     <tr>
-                        <td scope="row">Scale factor (userUnits / canvasUnits)</td>
+                        <td scope="row">Scale factor</td>
                         <td id="scale-factor">1</td>
                     </tr>
                     </tbody>
                 </table>
-                <br>
-                <br>
                 <h2>Path</h2>
-                <button id="draw-path" class="btn">Draw path</button>
-                <button id="finish-path" class="btn">Finish path</button>
-                <button id="reset-path" class="btn">Reset path</button>
+                <div class="btn-group">
+                    <button id="draw-path" class="btn btn-success">Draw path</button>
+                    <button id="finish-path" class="btn btn-primary">Finish path</button>
+                    <button id="reset-path" class="btn btn-warning">Reset path</button>
+                </div>
                 <br>
                 <br>
                 <h2>Results</h2>
-                <button id="calc-area" class="btn btn-primary">Calculate</button>       
+                <button id="calc-area" class="btn btn-success">Calculate</button>       
                 <br>
                 <br>
                 <table class="table table-hover">

@@ -45,6 +45,21 @@ button {
     vertical-align: top;
     padding: 5px;
     line-height: 5px;
+
+    font-size: 10pt;
+}
+
+.controls * input {
+    font-size: 10pt;
+}
+.controls * span {
+    font-size: 10pt;
+}
+.controls button {
+    font-size: 10pt;
+}
+.controls h2 {
+    font-size: 13pt;
 }
 
 .contol-field {

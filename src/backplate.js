@@ -10,6 +10,9 @@ let backSizeP = 100;
  */
 export function setBackplate() {
     let inp = document.getElementById('backplate');
+    backPosX = 0;
+    backPosY = 0;
+    backSizeP = 100;
 
     if (inp.files.length > 0) {
         let reader = new FileReader();
@@ -22,21 +25,19 @@ export function setBackplate() {
                 if (img.naturalHeight > canvas.height) {
                     scaleFact = canvas.height / img.naturalHeight;
                 }
+                scaleFact = scaleFact.toFixed(2);
+                console.log(scaleFact);
+                backSizeP = Math.round(scaleFact * 100);
                 ctx.drawImage(
                     img, backPosX, backPosY,
                     img.naturalWidth*scaleFact, img.naturalHeight*scaleFact
                 );
                 const drawCanvas = document.getElementById('pcanvas');
                 drawCanvas.style.background = 'url(\''+canvas.toDataURL()+'\')';
-                drawCanvas.style.backgroundRepeat = 'no-repeat';
-                drawCanvas.style.backgroundPositionX =
-                    backPosX.toString() + 'px';
-                drawCanvas.style.backgroundPositionY =
-                    backPosY.toString() + 'px';
+                document.getElementById('inpScale').value = backSizeP;
                 adjustBackplateSizeAndPos();
             };
             img.src = reader.result;
-            console.log(reader.result);
         };
         reader.readAsDataURL(inp.files[0]);
     }
@@ -45,9 +46,8 @@ export function setBackplate() {
 /**
  * Sets up background position and scale
  */
-export function adjustBackplateSizeAndPos() {
+function adjustBackplateSizeAndPos() {
     const drawCanvas = document.getElementById('pcanvas');
-    drawCanvas.style.background = 'url(\''+canvas.toDataURL()+'\')';
     drawCanvas.style.backgroundRepeat = 'no-repeat';
     drawCanvas.style.backgroundPositionX = backPosX.toString() + 'px';
     drawCanvas.style.backgroundPositionY = backPosY.toString() + 'px';
@@ -55,7 +55,7 @@ export function adjustBackplateSizeAndPos() {
     drawCanvas.style.opacity = '0.75';
 }
 
-export function enterAdjustBackplateState() {
+export function setupBackplateHandlers() {
     const posXElement = document.getElementById('posX');
     posXElement.onchange = function() {
         backPosX = parseInt(posXElement.value, 10);

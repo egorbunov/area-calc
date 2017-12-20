@@ -1,4 +1,4 @@
-import {drawRuler, drawPoint, drawLine} from './draw';
+import {drawBase, drawPoint, drawLine} from './draw';
 import Vector from './vector';
 
 const canvas = document.getElementById('pcanvas');
@@ -13,12 +13,16 @@ export function enterPolyDrawState() {
     canvas.addEventListener('mousemove', onMouseMove, false);
     document.getElementById('finish-path').onclick = onStopPath;
     document.getElementById('reset-path').onclick = resetPoly;
+    document.getElementById('draw-path').className += ' active';
     redraw();
 }
 
 export function exitPolyDrawState() {
     canvas.removeEventListener('mousedown', onMouseDown);
     canvas.removeEventListener('mousemove', onMouseMove);
+
+    const btn = document.getElementById('draw-path');
+    btn.className = btn.className.replace(' active', '');
 }
 
 export function polyFinished() {
@@ -31,7 +35,6 @@ export function getPoly() {
 
 export function resetPoly() {
     poly = [];
-    area = -1;
     isPolyFinished = false;
     curX = -1;
     curY = -1;
@@ -41,11 +44,7 @@ export function resetPoly() {
 
 function redraw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    const shift = 20;
-    drawRuler(canvas, [shift, shift*2], [shift, canvas.height - shift], 10, 25);
-    drawRuler(canvas, [shift*2, shift], [canvas.width - shift, shift], 10, 25);
-
-
+    drawBase(canvas);
     poly.map(function(p, i) {
         drawPoint(ctx, p[0], p[1], 1.2, 'black');
         if (i + 1 < poly.length) {

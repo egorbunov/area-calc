@@ -13,7 +13,7 @@ let curY = -1;
 
 function redraw() {
     calcScaleFactor();
-    document.getElementById('scale-factor').innerText = scale.toString();
+    document.getElementById('scale-factor').innerText = scale.toFixed(3).toString();
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     const shift = 20;
@@ -82,6 +82,7 @@ export function enterScaleSetupState() {
         redraw();
     };
 
+    document.getElementById('setup-scale').className += ' active';
 
     redraw();
 }
@@ -89,6 +90,9 @@ export function enterScaleSetupState() {
 export function exitScaleSetupState() {
     canvas.removeEventListener('mousedown', onMouseDown);
     canvas.removeEventListener('mousemove', onMouseMove);
+
+    const btn = document.getElementById('setup-scale');
+    btn.className = btn.className.replace(' active', '');
 }
 
 export function getScale() {

@@ -1,5 +1,11 @@
 import Vector from './vector';
 
+export function drawBase(canvas) {
+    const shift = 20;
+    drawRuler(canvas, [shift, shift*2], [shift, canvas.height - shift], 10, 25);
+    drawRuler(canvas, [shift*2, shift], [canvas.width - shift, shift], 10, 25);
+}
+
 /**
  * Draws ruler
  */
