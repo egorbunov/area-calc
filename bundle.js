@@ -68,6 +68,79 @@
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = drawBase;
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return drawRuler; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return drawPoint; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return drawLine; });
+/* unused harmony export putAreaText */
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__vector__ = __webpack_require__(1);
+
+
+function drawBase(canvas) {
+    const shift = 20;
+    drawRuler(canvas, [shift, shift*2], [shift, canvas.height - shift], 10, 25);
+    drawRuler(canvas, [shift*2, shift], [canvas.width - shift, shift], 10, 25);
+}
+
+/**
+ * Draws ruler
+ */
+function drawRuler(canvas, from, to, tickSz, tickStep) {
+    const ctx2D = canvas.getContext('2d');
+    drawLine(ctx2D, from[0], from[1], to[0], to[1], 1);
+
+    ctx2D.beginPath();
+    ctx2D.font = '9px Arial';
+    ctx2D.fillStyle = 'black';
+
+    let start = new __WEBPACK_IMPORTED_MODULE_0__vector__["a" /* default */](from[0], from[1]);
+    const end = new __WEBPACK_IMPORTED_MODULE_0__vector__["a" /* default */](to[0], to[1]);
+    const totSteps = end.clone().subtract(start).length() / tickStep;
+    const step = end.clone().subtract(start).normalize();
+    for (let i = 0; i < totSteps; i++) {
+        const tick = step.clone().multiply(tickSz);
+        tick.rotate(Math.PI/2);
+        const from = tick.clone().negative().multiply(0.5).add(start);
+
+        drawLine(ctx2D, from.x, from.y, from.x+tick.x, from.y+tick.y, 1);
+        // ctx2D.fillText(
+        //     parseInt(0 + i*tickStep, 10).toString(),
+        //     start.x+tick.x, start.y+tick.y
+        // );
+        start.add(step.clone().multiply(tickStep));
+    }
+
+    ctx2D.stroke();
+}
+
+function drawPoint(ctx2D, x, y, rad, color) {
+    ctx2D.beginPath();
+    ctx2D.arc(x, y, rad, 0, Math.PI*2, true);
+    ctx2D.fillStyle = color;
+    ctx2D.fill();
+}
+
+function drawLine(ctx2D, fromX, fromY, toX, toY, wid) {
+    ctx2D.beginPath();
+    ctx2D.moveTo(fromX, fromY);
+    ctx2D.lineTo(toX, toY);
+    ctx2D.lineWidth = wid;
+    ctx2D.stroke();
+}
+
+function putAreaText(ctx2D, area, x, y) {
+    ctx2D.font = '30px Arial';
+    ctx2D.fillText('Area: ' + area.toFixed(3).toString(), x, y);
+}
+
+
+
+
+/***/ }),
+/* 1 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 class Vector {
     constructor(x, y) {
         this.x = x || 0;
@@ -188,72 +261,6 @@ class Vector {
 
 
 /***/ }),
-/* 1 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return drawRuler; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return drawPoint; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return drawLine; });
-/* unused harmony export putAreaText */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__vector__ = __webpack_require__(0);
-
-
-/**
- * Draws ruler
- */
-function drawRuler(canvas, from, to, tickSz, tickStep) {
-    const ctx2D = canvas.getContext('2d');
-    drawLine(ctx2D, from[0], from[1], to[0], to[1], 1);
-
-    ctx2D.beginPath();
-    ctx2D.font = '9px Arial';
-    ctx2D.fillStyle = 'black';
-
-    let start = new __WEBPACK_IMPORTED_MODULE_0__vector__["a" /* default */](from[0], from[1]);
-    const end = new __WEBPACK_IMPORTED_MODULE_0__vector__["a" /* default */](to[0], to[1]);
-    const totSteps = end.clone().subtract(start).length() / tickStep;
-    const step = end.clone().subtract(start).normalize();
-    for (let i = 0; i < totSteps; i++) {
-        const tick = step.clone().multiply(tickSz);
-        tick.rotate(Math.PI/2);
-        const from = tick.clone().negative().multiply(0.5).add(start);
-
-        drawLine(ctx2D, from.x, from.y, from.x+tick.x, from.y+tick.y, 1);
-        // ctx2D.fillText(
-        //     parseInt(0 + i*tickStep, 10).toString(),
-        //     start.x+tick.x, start.y+tick.y
-        // );
-        start.add(step.clone().multiply(tickStep));
-    }
-
-    ctx2D.stroke();
-}
-
-function drawPoint(ctx2D, x, y, rad, color) {
-    ctx2D.beginPath();
-    ctx2D.arc(x, y, rad, 0, Math.PI*2, true);
-    ctx2D.fillStyle = color;
-    ctx2D.fill();
-}
-
-function drawLine(ctx2D, fromX, fromY, toX, toY, wid) {
-    ctx2D.beginPath();
-    ctx2D.moveTo(fromX, fromY);
-    ctx2D.lineTo(toX, toY);
-    ctx2D.lineWidth = wid;
-    ctx2D.stroke();
-}
-
-function putAreaText(ctx2D, area, x, y) {
-    ctx2D.font = '30px Arial';
-    ctx2D.fillText('Area: ' + area.toFixed(3).toString(), x, y);
-}
-
-
-
-
-/***/ }),
 /* 2 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -263,6 +270,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__scalesetup__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__backplate__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__geom__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__draw__ = __webpack_require__(0);
+
 
 
 
@@ -271,8 +280,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 // initializing canvas
 const canvas = document.getElementById('pcanvas');
 const backCanvas = document.getElementById('back-canvas');
-
-canvas.width = window.outerWidth * 0.65;
+canvas.width = window.outerWidth * 10/13;
 canvas.height = window.outerHeight * 0.8;
 backCanvas.width = window.outerWidth;
 backCanvas.height = window.outerHeight;
@@ -282,7 +290,7 @@ document.getElementById('backplate').onclick = function() {
     this.value = null;
 };
 document.getElementById('backplate').onchange = function() {
-    Object(__WEBPACK_IMPORTED_MODULE_2__backplate__["b" /* setBackplate */])();
+    Object(__WEBPACK_IMPORTED_MODULE_2__backplate__["a" /* setBackplate */])();
 };
 
 // states
@@ -290,6 +298,11 @@ const NONE_STATE = 0;
 const DRAW_POLY_STATE = 1;
 const SETUP_SCALE_STATE = 2;
 let curState = NONE_STATE;
+
+function enterDefaultState() {
+    canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
+    Object(__WEBPACK_IMPORTED_MODULE_4__draw__["a" /* drawBase */])(canvas);
+}
 
 /**
  * Changes view state calling exit/enter state functions
@@ -313,6 +326,8 @@ function goState(newState) {
     case SETUP_SCALE_STATE:
         Object(__WEBPACK_IMPORTED_MODULE_1__scalesetup__["a" /* enterScaleSetupState */])();
         break;
+    case NONE_STATE:
+        enterDefaultState();
     default:
     }
 }
@@ -336,8 +351,8 @@ document.getElementById('calc-area').onclick = function() {
 };
 
 // setting up backplate stuff
-Object(__WEBPACK_IMPORTED_MODULE_2__backplate__["a" /* enterAdjustBackplateState */])();
-
+Object(__WEBPACK_IMPORTED_MODULE_2__backplate__["b" /* setupBackplateHandlers */])();
+goState(NONE_STATE);
 
 
 /***/ }),
@@ -350,8 +365,8 @@ Object(__WEBPACK_IMPORTED_MODULE_2__backplate__["a" /* enterAdjustBackplateState
 /* harmony export (immutable) */ __webpack_exports__["d"] = polyFinished;
 /* harmony export (immutable) */ __webpack_exports__["c"] = getPoly;
 /* unused harmony export resetPoly */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__draw__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__vector__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__draw__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__vector__ = __webpack_require__(1);
 
 
 
@@ -367,12 +382,16 @@ function enterPolyDrawState() {
     canvas.addEventListener('mousemove', onMouseMove, false);
     document.getElementById('finish-path').onclick = onStopPath;
     document.getElementById('reset-path').onclick = resetPoly;
+    document.getElementById('draw-path').className += ' active';
     redraw();
 }
 
 function exitPolyDrawState() {
     canvas.removeEventListener('mousedown', onMouseDown);
     canvas.removeEventListener('mousemove', onMouseMove);
+
+    const btn = document.getElementById('draw-path');
+    btn.className = btn.className.replace(' active', '');
 }
 
 function polyFinished() {
@@ -385,7 +404,6 @@ function getPoly() {
 
 function resetPoly() {
     poly = [];
-    area = -1;
     isPolyFinished = false;
     curX = -1;
     curY = -1;
@@ -395,21 +413,17 @@ function resetPoly() {
 
 function redraw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    const shift = 20;
-    Object(__WEBPACK_IMPORTED_MODULE_0__draw__["c" /* drawRuler */])(canvas, [shift, shift*2], [shift, canvas.height - shift], 10, 25);
-    Object(__WEBPACK_IMPORTED_MODULE_0__draw__["c" /* drawRuler */])(canvas, [shift*2, shift], [canvas.width - shift, shift], 10, 25);
-
-
+    Object(__WEBPACK_IMPORTED_MODULE_0__draw__["a" /* drawBase */])(canvas);
     poly.map(function(p, i) {
-        Object(__WEBPACK_IMPORTED_MODULE_0__draw__["b" /* drawPoint */])(ctx, p[0], p[1], 1.2, 'black');
+        Object(__WEBPACK_IMPORTED_MODULE_0__draw__["c" /* drawPoint */])(ctx, p[0], p[1], 1.2, 'black');
         if (i + 1 < poly.length) {
-            Object(__WEBPACK_IMPORTED_MODULE_0__draw__["a" /* drawLine */])(ctx, p[0], p[1], poly[i+1][0], poly[i+1][1], 2);
+            Object(__WEBPACK_IMPORTED_MODULE_0__draw__["b" /* drawLine */])(ctx, p[0], p[1], poly[i+1][0], poly[i+1][1], 2);
         }
     });
 
     if (curX >= 0 && curY >= 0 && poly.length > 0 && !isPolyFinished) {
         const last = poly[poly.length - 1];
-        Object(__WEBPACK_IMPORTED_MODULE_0__draw__["a" /* drawLine */])(ctx, last[0], last[1], curX, curY, 2);
+        Object(__WEBPACK_IMPORTED_MODULE_0__draw__["b" /* drawLine */])(ctx, last[0], last[1], curX, curY, 2);
     }
 }
 
@@ -468,8 +482,8 @@ function onMouseMove(e) {
 /* harmony export (immutable) */ __webpack_exports__["a"] = enterScaleSetupState;
 /* harmony export (immutable) */ __webpack_exports__["b"] = exitScaleSetupState;
 /* harmony export (immutable) */ __webpack_exports__["c"] = getScale;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__vector__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__draw__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__vector__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__draw__ = __webpack_require__(0);
 
 
 
@@ -485,26 +499,26 @@ let curY = -1;
 
 function redraw() {
     calcScaleFactor();
-    document.getElementById('scale-factor').innerText = scale.toString();
+    document.getElementById('scale-factor').innerText = scale.toFixed(3).toString();
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     const shift = 20;
-    Object(__WEBPACK_IMPORTED_MODULE_1__draw__["c" /* drawRuler */])(canvas, [shift, shift*2], [shift, canvas.height - shift], 10, 25);
-    Object(__WEBPACK_IMPORTED_MODULE_1__draw__["c" /* drawRuler */])(canvas, [shift*2, shift], [canvas.width - shift, shift], 10, 25);
+    Object(__WEBPACK_IMPORTED_MODULE_1__draw__["d" /* drawRuler */])(canvas, [shift, shift*2], [shift, canvas.height - shift], 10, 25);
+    Object(__WEBPACK_IMPORTED_MODULE_1__draw__["d" /* drawRuler */])(canvas, [shift*2, shift], [canvas.width - shift, shift], 10, 25);
 
     let pTo = to;
     if (to.x < 0) {
         pTo = new __WEBPACK_IMPORTED_MODULE_0__vector__["a" /* default */](curX, curY);
     }
 
-    Object(__WEBPACK_IMPORTED_MODULE_1__draw__["b" /* drawPoint */])(ctx, from.x, from.y, 2, 'red');
-    Object(__WEBPACK_IMPORTED_MODULE_1__draw__["b" /* drawPoint */])(ctx, pTo.x, pTo.y, 2, 'red');
+    Object(__WEBPACK_IMPORTED_MODULE_1__draw__["c" /* drawPoint */])(ctx, from.x, from.y, 2, 'red');
+    Object(__WEBPACK_IMPORTED_MODULE_1__draw__["c" /* drawPoint */])(ctx, pTo.x, pTo.y, 2, 'red');
 
     if (pTo.x < 0 || from.x < 0) {
         return;
     }
 
-    Object(__WEBPACK_IMPORTED_MODULE_1__draw__["a" /* drawLine */])(ctx, from.x, from.y, pTo.x, pTo.y, 1);
+    Object(__WEBPACK_IMPORTED_MODULE_1__draw__["b" /* drawLine */])(ctx, from.x, from.y, pTo.x, pTo.y, 1);
 
     // draw ticks
     const sz = 20;
@@ -512,9 +526,9 @@ function redraw() {
         .subtract(from).normalize().multiply(sz).rotate(Math.PI/2);
 
     let tStart = tick.clone().negative().multiply(0.5).add(from);
-    Object(__WEBPACK_IMPORTED_MODULE_1__draw__["a" /* drawLine */])(ctx, tStart.x, tStart.y, tStart.x+tick.x, tStart.y+tick.y, 1);
+    Object(__WEBPACK_IMPORTED_MODULE_1__draw__["b" /* drawLine */])(ctx, tStart.x, tStart.y, tStart.x+tick.x, tStart.y+tick.y, 1);
     tStart = tick.clone().negative().multiply(0.5).add(pTo);
-    Object(__WEBPACK_IMPORTED_MODULE_1__draw__["a" /* drawLine */])(ctx, tStart.x, tStart.y, tStart.x+tick.x, tStart.y+tick.y, 1);
+    Object(__WEBPACK_IMPORTED_MODULE_1__draw__["b" /* drawLine */])(ctx, tStart.x, tStart.y, tStart.x+tick.x, tStart.y+tick.y, 1);
 
     ctx.save();
     ctx.font = '15px Arial';
@@ -554,6 +568,7 @@ function enterScaleSetupState() {
         redraw();
     };
 
+    document.getElementById('setup-scale').className += ' active';
 
     redraw();
 }
@@ -561,6 +576,9 @@ function enterScaleSetupState() {
 function exitScaleSetupState() {
     canvas.removeEventListener('mousedown', onMouseDown);
     canvas.removeEventListener('mousemove', onMouseMove);
+
+    const btn = document.getElementById('setup-scale');
+    btn.className = btn.className.replace(' active', '');
 }
 
 function getScale() {
@@ -608,9 +626,8 @@ function onMouseMove(e) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (immutable) */ __webpack_exports__["b"] = setBackplate;
-/* unused harmony export adjustBackplateSizeAndPos */
-/* harmony export (immutable) */ __webpack_exports__["a"] = enterAdjustBackplateState;
+/* harmony export (immutable) */ __webpack_exports__["a"] = setBackplate;
+/* harmony export (immutable) */ __webpack_exports__["b"] = setupBackplateHandlers;
 const canvas = document.getElementById('back-canvas');
 const ctx = canvas.getContext('2d');
 
@@ -623,6 +640,9 @@ let backSizeP = 100;
  */
 function setBackplate() {
     let inp = document.getElementById('backplate');
+    backPosX = 0;
+    backPosY = 0;
+    backSizeP = 100;
 
     if (inp.files.length > 0) {
         let reader = new FileReader();
@@ -635,21 +655,19 @@ function setBackplate() {
                 if (img.naturalHeight > canvas.height) {
                     scaleFact = canvas.height / img.naturalHeight;
                 }
+                scaleFact = scaleFact.toFixed(2);
+                console.log(scaleFact);
+                backSizeP = Math.round(scaleFact * 100);
                 ctx.drawImage(
                     img, backPosX, backPosY,
                     img.naturalWidth*scaleFact, img.naturalHeight*scaleFact
                 );
                 const drawCanvas = document.getElementById('pcanvas');
                 drawCanvas.style.background = 'url(\''+canvas.toDataURL()+'\')';
-                drawCanvas.style.backgroundRepeat = 'no-repeat';
-                drawCanvas.style.backgroundPositionX =
-                    backPosX.toString() + 'px';
-                drawCanvas.style.backgroundPositionY =
-                    backPosY.toString() + 'px';
+                document.getElementById('inpScale').value = backSizeP;
                 adjustBackplateSizeAndPos();
             };
             img.src = reader.result;
-            console.log(reader.result);
         };
         reader.readAsDataURL(inp.files[0]);
     }
@@ -660,7 +678,6 @@ function setBackplate() {
  */
 function adjustBackplateSizeAndPos() {
     const drawCanvas = document.getElementById('pcanvas');
-    drawCanvas.style.background = 'url(\''+canvas.toDataURL()+'\')';
     drawCanvas.style.backgroundRepeat = 'no-repeat';
     drawCanvas.style.backgroundPositionX = backPosX.toString() + 'px';
     drawCanvas.style.backgroundPositionY = backPosY.toString() + 'px';
@@ -668,7 +685,7 @@ function adjustBackplateSizeAndPos() {
     drawCanvas.style.opacity = '0.75';
 }
 
-function enterAdjustBackplateState() {
+function setupBackplateHandlers() {
     const posXElement = document.getElementById('posX');
     posXElement.onchange = function() {
         backPosX = parseInt(posXElement.value, 10);
